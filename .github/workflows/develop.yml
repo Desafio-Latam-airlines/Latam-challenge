@@ -1,0 +1,33 @@
+name: Development environment CI/CD
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Terraform installation
+      run: |
+        rm -rf terraform*
+        wget https://releases.hashicorp.com/terraform/1.3.3/terraform_1.3.3_linux_amd64.zip -O terraform.zip
+        sudo apt-get install unzip -y
+        unzip -o terraform*.zip
+        sudo chmod +x terraform
+        sudo mv terraform /usr/local/bin
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Executing Terraform
+      env:
+        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+      run: |
+        cd $GITHUB_WORKSPACE ; terraform init ; terraform apply -auto-approve
