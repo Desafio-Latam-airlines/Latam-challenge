@@ -10,13 +10,13 @@ variable "aws_region" {
 variable "AWS_ACCESS_KEY" {
   description = "AWS access key or public key"
 
-  type = string
+  type    = string
   default = ""
 }
 
 variable "AWS_SECRET_KEY" {
   description = "AWS secret key or secret key"
 
-  type = string
+  type    = string
   default = ""
 }

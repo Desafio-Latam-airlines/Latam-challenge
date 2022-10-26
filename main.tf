@@ -23,7 +23,7 @@ provider "aws" {
 
 # Create S3 bucket
 resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = "latamChallengeDev"
+  bucket = "latam-challenge-dev"
 }
 
 # Declare S3 ACL type
